@@ -8,7 +8,8 @@
 //
 locals {
   this_dir = dirname(abspath(path.module))
-  root_dir = abspath(path.root)
+  // Terragrunt runs the root module from a copy under .terragrunt-cache
+  root_dir = replace(abspath(path.root), "/\\/\\.terragrunt-cache\\/.*$/", "")
   root_parts = split("/", local.root_dir)
 
   // The root module's parent, grandparent and great-grandparent, nearest first
